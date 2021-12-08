@@ -10,7 +10,7 @@ const configsql={
     user:'uservideojuego',
     password: 'videogame123',
     server: 'localhost',
-    database: 'videojuegos',
+    database: 'BasedeDatos',
     options: {
         trustedConnection: true,
         encrypt: true,
