@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom';
 import axios from "axios";
-import Imagen from './Imagen';
 import Carta from "./Card"
+import Chart from "./Chart"
+import { Card, Col, Container, Row} from 'react-bootstrap';
+
 
 function ViewIndividual() {
     const location = useLocation(); //Propiedades pasadas desde el navbar
@@ -40,6 +42,7 @@ function ViewIndividual() {
                     setJuego(location.state.Nombre)
                     setInfo(response.data);
                     console.log("Datos desde ViewIndividual",response.data);
+                    console.log("Datos desde ViewIndividual",response.data[3][0] );
                 })
                 .catch((error) => {
                 console.log("Error", error);
@@ -62,8 +65,39 @@ function ViewIndividual() {
         <div>
             <div className="main">
                 {
-                    picture && datos && <Carta img = {picture.original} datos = {datos} nombre = {juego} className="info"/>
-                }
+                    picture && datos && info && (       //validar todo
+                        <>
+                            <Col>
+                            <Container>
+                                <Carta img = {picture.original} datos = {datos} nombre = {juego} className="info"/>
+                            </Container>
+                            <Container>                            
+                                {info[1].length ? <Chart informacion = {{data: info[1][0], labels: ['VentasJapon', 'VentasNorteAmerica', 'VentasUnionEuropea','OtrasVentas'], titulo:'ventas en millones', colores:'blue'}} /> : ""}
+                            
+                                {info[3].length ? <Chart 
+                                                    informacion = {{data:  (({ CriticasPositivas, CriticasNegativas, CriticasNeutrales}) => ({ CriticasPositivas, CriticasNegativas, CriticasNeutrales}))(info[3][0]), //https://stackoverflow.com/questions/17781472/how-to-get-a-subset-of-a-javascript-objects-properties
+                                                    labels: ['CriticasPositivas', 'CriticasNegativas', 'CriticasNeutrales'], 
+                                                    titulo:'Criticas', 
+                                                    colores:['green','red','grey']}} 
+                                                    /> : ""}
+                                {info[3].length ? <Chart 
+                                                    informacion = {{data: (({ UsuariosPositivas, UsuariosNegativas, UsuariosNeutrales}) => ({ UsuariosPositivas, UsuariosNegativas, UsuariosNeutrales}))(info[3][0]), 
+                                                    labels: ['UsuariosPositivas','UsuariosNegativas','UsuariosNeutrales'], 
+                                                    titulo:'Criticas Usuarios', 
+                                                    colores:['green','red','grey']}} 
+                                                    /> : ""}
+
+                                {info[3].length ? <Chart 
+                                                    informacion = {{data: (({ PuntajeUsuarios, PuntajeMetacritic}) => ({ PuntajeUsuarios, PuntajeMetacritic}))(info[3][0]), 
+                                                    labels: ['PuntajeUsuarios','PuntajeMetacritic'], 
+                                                    titulo:'PuntajeMetacritic', 
+                                                    colores:'green'}} 
+                                                    /> : ""}
+                            </Container>
+                            </Col>
+                        </>
+                    )
+                }     
             </div>
         </div>
     )
