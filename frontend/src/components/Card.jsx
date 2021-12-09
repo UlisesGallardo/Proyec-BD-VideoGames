@@ -6,7 +6,7 @@ function Carta(props) {
     console.log(props   )
     return (
         <div>
-            <Card style={{ width: '50rem' }}>
+            <Card style={{ width: '50rem' }} className="ms-auto me-auto">
                         <Card.Body>
                             <Container>
                             <Row>

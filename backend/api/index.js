@@ -41,6 +41,44 @@ app.get('/api/videojuegos', function(request, response){
     });
 });
 
+app.get('/api/videojuegos/topVentas', function(request, response){
+    var sql = require("mssql"); 
+    sql.connect(configsql, function(err){
+        if(err)console.log(err);
+        var querystring = "select TOP(100) vv.VentasGlobales, v.Nombre, v.Genero, v.AnioSalida from Ventas vv join Videojuego v on v.IDVentas = vv.ID order by VentasGlobales desc";
+
+        var result = new sql.Request();
+
+        result.query(querystring, function(error, recordset){
+            if(error){
+                console.log("Error",error);
+                response.sendStatus(400);
+            }
+            console.log("datos desde backend topventas",recordset.recordset)
+            response.send(recordset.recordset);
+        })  
+    });
+});
+
+app.get('/api/videojuegos/topPuntaje', function(request, response){
+    var sql = require("mssql"); 
+    sql.connect(configsql, function(err){
+        if(err)console.log(err);
+        var querystring = "select TOP(150) p.PuntajeMetacritic, v.Nombre, v.Genero, v.AnioSalida from PuntajeMetacritic p join Videojuego v on v.IDPuntaje = p.ID order by p.PuntajeMetacritic desc";
+
+        var result = new sql.Request();
+
+        result.query(querystring, function(error, recordset){
+            if(error){
+                console.log("Error",error);
+                response.sendStatus(400);
+            }
+            console.log("datos desde backend topventas",recordset.recordset)
+            response.send(recordset.recordset);
+        })  
+    });
+});
+
 app.get('/api/videojuegos/:Nombre', function(request, response){
     const Name = request.params.Nombre;
 

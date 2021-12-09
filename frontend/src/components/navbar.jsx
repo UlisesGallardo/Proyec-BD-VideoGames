@@ -43,9 +43,11 @@ function NavbarLateral() {
 
     return (
         <div>
-            <Navbar bg="light" expand={false}>
+            <Navbar bg = "dark" variant = "dark" expand={false}>
                 <Container fluid>
-                    <Navbar.Brand href="#">Navbar Offcanvas</Navbar.Brand>
+                    <Navbar.Brand href="/">
+                        SomeGames
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="offcanvasNavbar" />
                     <Navbar.Offcanvas
                     id="offcanvasNavbar"
@@ -53,21 +55,22 @@ function NavbarLateral() {
                     placement="end"
                     >
                     <Offcanvas.Header closeButton>
-                        <Offcanvas.Title id="offcanvasNavbarLabel">Offcanvas</Offcanvas.Title>
+                        <Offcanvas.Title id="offcanvasNavbarLabel">Opciones</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        <Form className="d-flex">
+                        <Form className="d-flex mb-3">
                             <FormControl
                                 type="search"
-                                placeholder="Search"
+                                placeholder="Buscar"
                                 className="me-2"
-                                aria-label="Search"
+                                aria-label="Buscar"
                                 onChange={handleChange}
                             />
-                            <Button variant="outline-success" onClick={validar}>Search</Button>
+                            <Button variant="outline-info" onClick={validar}>Buscar</Button>
                         </Form>
                         <Nav className="justify-content-end flex-grow-1 pe-3">
-                        <Nav.Link href="/">Casita</Nav.Link>
+                        <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="#">Búsqueda avanzada</Nav.Link>
                         <NavDropdown title="Tops" id="offcanvasNavbarDropdown">
                             <NavDropdown.Item href="#action3">Ventas</NavDropdown.Item>
                             <NavDropdown.Item href="#action4">Puntaje</NavDropdown.Item>
