@@ -1,0 +1,9 @@
+.main{
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.info{
+    width: 60%;
+}

@@ -10,7 +10,7 @@ const configsql={
     user:'uservideojuego',
     password: 'videogame123',
     server: 'localhost',
-    database: 'BasedeDatos',
+    database: 'videojuegos',
     options: {
         trustedConnection: true,
         encrypt: true,
@@ -41,6 +41,31 @@ app.get('/api/videojuegos', function(request, response){
     });
 });
 
+app.get('/api/videojuegos/:Nombre', function(request, response){
+    const Name = request.params.Nombre;
+
+    //Devolver un arreglo de objetos donde el ID de los Puntajes, Ventas o Desarrollador sea distinto de NULL
+    const datos = []
+
+    var sql = require("mssql"); 
+    sql.connect(configsql, function(err){
+
+        //multiples consultas https://www.technicalkeeda.com/nodejs-tutorials/nodejs-mysql-multiple-statement-queries
+        if(err)console.log(err);
+        var querystring = "select * from Videojuego v where v.Nombre = '"+Name+"'; select DISTINCT v.VentasGlobales, v.VentasJapon,v.VentasNorteAmerica, v.VentasUnionEuropea,v.OtrasVentas from Videojuego vv join Ventas v on v.ID = vv.IDVentas where vv.Nombre = '"+Name+"'; select DISTINCT d.Nombre Desarrollador, Ciudad, País, AnioFundacion from Videojuego v join Desarrollador d on d.ID = v.IDDesarrollador where v.Nombre = '"+Name+"'; select DISTINCT CriticasPositivas, CriticasNegativas, CriticasNeutrales, UsuariosPositivas,UsuariosNegativas, UsuariosNeutrales,PuntajeUsuarios, PuntajeMetacritic  from Videojuego v join PuntajeMetacritic p on p.ID = v.IDPuntaje where v.Nombre = '"+Name+"'";
+
+        var result = new sql.Request();
+
+        result.query(querystring, function(error, recordset){
+            if(error){
+                console.log("Error",error);
+                response.sendStatus(400);
+            }        
+            response.send(recordset.recordsets);
+        })  
+    });
+});
+
 app.get('/api/videojuegos/imagenes/:Nombre', function(request, response){
 
     const Name = request.params.Nombre;
@@ -58,6 +83,27 @@ app.get('/api/videojuegos/imagenes/:Nombre', function(request, response){
         //console.log(data['images_results']);
     };
     search.json(params, callback);    
+});
+
+//api/videojuego/validar
+app.get('/api/videojuego/validar/:Nombre', function(request, response){
+    const Name = request.params.Nombre;
+    var sql = require("mssql"); 
+    sql.connect(configsql, function(err){
+
+        if(err)console.log(err);
+        var querystring = "select count(1) existe from Videojuego where Nombre = '"+Name+"' ";
+
+        var result = new sql.Request();
+
+        result.query(querystring, function(error, recordset){
+            if(error){
+                console.log("Error",error);
+                response.sendStatus(400);
+            }
+            response.send(recordset);
+        })  
+    });
 });
 
 app.get("/", (req, res)=>{

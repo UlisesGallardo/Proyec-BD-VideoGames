@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
+import "./styles.css"
 
 function Imagen(props) {
     const [picture, setPicture] = useState({})
@@ -21,7 +22,6 @@ function Imagen(props) {
     useEffect(()=>{
         img(props.Nombre);
     },[])
-
 
     return (
         <div>
