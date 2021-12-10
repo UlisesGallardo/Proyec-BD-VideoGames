@@ -12,6 +12,13 @@ function NavbarLateral() {
     const [juego, setJuego] = useState("")
 
     //Validar juego
+    const TopVentas = ()=>{
+        navigate('/toppage', {state:{top:true}});
+    }
+
+    const TopPuntaje = ()=>{
+        navigate('/toppage', {state:{top:false}});
+    }
 
     const validar = ()=>{
         axios({
@@ -70,11 +77,7 @@ function NavbarLateral() {
                         </Form>
                         <Nav className="justify-content-end flex-grow-1 pe-3">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="#">Búsqueda avanzada</Nav.Link>
-                        <NavDropdown title="Tops" id="offcanvasNavbarDropdown">
-                            <NavDropdown.Item href="#action3">Ventas</NavDropdown.Item>
-                            <NavDropdown.Item href="#action4">Puntaje</NavDropdown.Item>
-                        </NavDropdown>
+                        <Nav.Link href="/search">Búsqueda avanzada</Nav.Link>
                         </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>

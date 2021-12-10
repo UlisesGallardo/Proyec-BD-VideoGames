@@ -13,6 +13,10 @@ function HomePage() {
         navigate('/toppage', {state:{top:false}});
     }
 
+    const search = ()=>{
+        navigate('/search');
+    }
+
     return (
         <div>
             <Container>
@@ -45,7 +49,7 @@ function HomePage() {
                         <Card.Text>
                         Aquí podrás buscar juegos y ordenarlos de acuerdo al criterio que tú decidas.
                         </Card.Text>
-                        <Button variant="outline-info">Ver</Button>
+                        <Button variant="outline-info" onClick={search}>Ver</Button>
                     </Card.Body>
                     <Card.Footer className="text-muted">Experimenta y conoce.</Card.Footer>
                 </Card>

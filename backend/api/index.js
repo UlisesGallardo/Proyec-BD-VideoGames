@@ -41,6 +41,27 @@ app.get('/api/videojuegos', function(request, response){
     });
 });
 
+app.get('/api/videojuegos/busqueda/:Nombre', function(request, response){
+    const Name = request.params.Nombre;
+    var sql = require("mssql"); 
+    sql.connect(configsql, function(err){
+
+        if(err)console.log(err);
+        var querystring = "select *  from Videojuego vg where vg.Nombre like '"+Name+"%' ";
+
+        var result = new sql.Request();
+
+        result.query(querystring, function(error, recordset){
+            if(error){
+                console.log("Error",error);
+                response.sendStatus(400);
+            }
+            
+            response.send(recordset);
+        })  
+    });
+});
+
 app.get('/api/videojuegos/topVentas', function(request, response){
     var sql = require("mssql"); 
     sql.connect(configsql, function(err){

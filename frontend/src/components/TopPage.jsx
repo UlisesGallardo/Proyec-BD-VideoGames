@@ -47,8 +47,6 @@ function TopPage() {
                     Top.push(v);
                     contador+=1;
                 }
-
-                
                 setLoading(true);
                 console.log("datos desde TopPage", response);
             })
@@ -56,7 +54,7 @@ function TopPage() {
             console.log("Error", error);
             })
         }
-    },[location.state ? location.state.top : Top])
+    },[location.state ? location.state.top : location.key])
 
 
     return (

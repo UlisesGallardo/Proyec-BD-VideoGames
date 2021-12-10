@@ -10,7 +10,7 @@ function TopCard(props) {
 
     return (
         <div>
-            <Card bg="dark" text="light" border="info">
+            <Card bg="dark" text="light" border="info" className="mt-5">
                 <Card.Header as="h5">{props.Numero}. {props.Nombre}</Card.Header>
                 <Card.Body>
                     <Card.Title>{props.Global}</Card.Title>
