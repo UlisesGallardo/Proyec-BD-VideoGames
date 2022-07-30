@@ -1,0 +1,5 @@
+https://www.kaggle.com/upadorprofzs/eda-video-game-sales/data
+https://www.kaggle.com/skateddu/metacritic-games-stats-20112019
+https://www.kaggle.com/andreshg/videogamescompaniesregions
+https://www.kaggle.com/luismartingrados/videogames
+
