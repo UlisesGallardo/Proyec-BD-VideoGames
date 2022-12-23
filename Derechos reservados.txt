@@ -1,1 +1,1 @@
-All data is powered by Steam. Not affiliated with Valve in any way. All trademarks are property of their respective owners in the US and other countries. Our goal is to provide unique insight into gaming trends. © steamcharts.com
+All data is powered by IGDB and Kaggle. Not affiliated with them in any way. All data are property of their respective owners in the US and other countries. Our goal is to provide unique insight into games.
