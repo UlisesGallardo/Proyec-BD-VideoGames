@@ -4,11 +4,14 @@ import { Bar } from 'react-chartjs-2';
 import "./styles.css"
 
 function Chart(props) {
-
+    console.log("item", props.informacion.data );
+    
     var datos = []
 
     if(props.informacion.data != null){
         for (const item in props.informacion.data) {
+            
+
             if(item.includes("Negativas")){
                 datos.push(-1*parseInt(props.informacion.data[item], 10))
             }else if(item!="VentasGlobales"){

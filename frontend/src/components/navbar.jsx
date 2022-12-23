@@ -53,7 +53,7 @@ function NavbarLateral() {
             <Navbar bg = "dark" variant = "dark" expand={false}>
                 <Container fluid>
                     <Navbar.Brand href="/">
-                        SomeGames
+                        VideoGamesInfo
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="offcanvasNavbar" />
                     <Navbar.Offcanvas

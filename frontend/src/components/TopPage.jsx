@@ -1,9 +1,11 @@
-import { Container } from 'react-bootstrap';
+import { Container , Row, Col} from 'react-bootstrap';
 import TopCard from './TopCard';
 import react, {useEffect, useState} from "react"
 import axios from 'axios';
 import {useLocation} from 'react-router-dom';
 import Chart from "./Chart"
+import ReactLoading from 'react-loading';
+
 
 
 function TopPage() {
@@ -19,9 +21,9 @@ function TopPage() {
             var url = ""
             var flag = location.state.top
             if(location.state.top){
-                url = "http://localhost:8080/api/videojuegos/topVentas"
+                url = "http://localhost:8081/api/videojuegos/topVentas"
             }else{
-                url = "http://localhost:8080/api/videojuegos/topPuntaje"
+                url = "http://localhost:8081/api/videojuegos/topPuntaje"
             }
 
             axios({
@@ -30,6 +32,8 @@ function TopPage() {
             })
             .then((response) => {
                 //setTop(response.data)       //Maps https://flaviocopes.com/javascript-data-structures-map/
+                console.log("datos desde TopPage", response.data);
+
                 const m = new Map()
                 response.data.map((Objeto)=>{
                     m.set(Objeto.Nombre, Objeto)
@@ -48,18 +52,20 @@ function TopPage() {
                     contador+=1;
                 }
                 setLoading(true);
-                console.log("datos desde TopPage", response);
-            })
-            .catch((error) => {
-            console.log("Error", error);
+            }).catch((error) => {
+                console.log("Error", error);
             })
         }
     },[location.state ? location.state.top : location.key])
 
+    {
+        if(loading == false) return <div className='d-flex justify-content-center' ><ReactLoading className='d-flex justify-content-center'  type = {"bars"} color = {"#2E4053"} height={'10%'} width={'10%'} /></div>
+    }
 
     return (
         <div>
             <Container className='mt-5 mb-5'>
+                
                 {
                  loading && location.state && Datos && location.state.top != null &&
                     <Chart
@@ -70,15 +76,20 @@ function TopPage() {
                         flag = {location.state.top}
                     />
                 }
-                {loading &&
-                    Top.map((Objeto, index)=>{
-                        return <div key={index}>
-                       {
-                           index+1 <= 50 && index+1 >=1 && <TopCard Numero={index+1} Nombre={Objeto.Nombre} Global={Objeto.VentasGlobales ? "Ventas Globales: "+Objeto.VentasGlobales : "Puntaje Metacritic: "+Objeto.PuntajeMetacritic} All={"Fecha de Salida: "+Objeto.AnioSalida+" Género: "+Objeto.Genero} />
-                       }     
-                    </div>
-                    })
+                {loading && <Row xs={1} md={2} className="g-4">
+                    {
+                        Top.map((Objeto, index)=>{
+                            return <div key={index}>
+                                    {
+                                        index+1 <= 50 && index+1 >=1 && <Col><TopCard Numero={index+1} Nombre={Objeto.Nombre} Global={Objeto.VentasGlobales ? "Ventas Globales: "+Objeto.VentasGlobales : "Puntaje Metacritic: "+Objeto.PuntajeMetacritic} All={"Fecha de Salida: "+Objeto.AnioSalida+" Género: "+Objeto.Genero} /> </Col>
+                                    }     
+                                
+                                </div>
+                        })
+                    }
+                </Row>                  
                 }
+                
             </Container>
         </div>
     )

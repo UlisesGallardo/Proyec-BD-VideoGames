@@ -10,14 +10,16 @@ function TopCard(props) {
 
     return (
         <div>
-            <Card bg="dark" text="light" border="info" className="mt-5">
+            <Card bg="dark" text="light" border="info" className="mt-10">
                 <Card.Header as="h5">{props.Numero}. {props.Nombre}</Card.Header>
-                <Card.Body>
-                    <Card.Title>{props.Global}</Card.Title>
-                    <Card.Text>
-                    {props.All}
+                <Card.Body >
+                    <Card.Title className='d-flex justify-content-center'>{props.Global}</Card.Title>
+                    <Card.Text className='d-flex justify-content-center'>
+                        {props.All}
                     </Card.Text>
-                    <Button variant="outline-info" onClick={Buscar}>Ver juego</Button>
+                    <div className='d-flex justify-content-center'>
+                        <Button className='d-flex justify-content-center' variant="outline-info" onClick={Buscar}>Ver juego</Button>
+                    </div>
                 </Card.Body>
             </Card>
         </div>
