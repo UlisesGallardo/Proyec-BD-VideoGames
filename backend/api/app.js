@@ -8,8 +8,10 @@ import bodyParser from "body-parser";
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 
+//https://videogames-info.web.app
+//'http://localhost:3000'
 const corsOptions ={
-    origin:'http://localhost:3000', 
+    origin: '*', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }

@@ -20,8 +20,11 @@ export const getVideojuegosTopVentas = ()=>{
 
 export const getInfoVideogame = (Name) =>{
     return new Promise((resolve, reject)=>{
+
+
         //multiples consultas https://www.technicalkeeda.com/nodejs-tutorials/nodejs-mysql-multiple-statement-queries
-        console.log("Nombre", Name);
+        //var query = "select * from Videojuego v where v.Nombre = '"+Name+"'; select DISTINCT v.VentasGlobales, v.VentasJapon,v.VentasNorteAmerica, v.VentasUnionEuropea,v.OtrasVentas from Videojuego vv join Ventas v on v.ID = vv.IDVentas where vv.Nombre = '"+Name+"'; select DISTINCT d.Nombre Desarrollador, Ciudad, País, AnioFundacion from Videojuego v join Desarrollador d on d.ID = v.IDDesarrollador where v.Nombre = '"+Name+"'; select DISTINCT CriticasPositivas, CriticasNegativas, CriticasNeutrales, UsuariosPositivas,UsuariosNegativas, UsuariosNeutrales,PuntajeUsuarios, PuntajeMetacritic  from Videojuego v join PuntajeMetacritic p on p.ID = v.IDPuntaje where v.Nombre = '"+Name+"'";
+        //console.log("Nombre", Name);
         var query = " select * from videojuego v where v.Nombre = '"+Name+"'; select DISTINCT v.VentasGlobales, v.VentasJapon,v.VentasNorteAmerica, v.VentasUnionEuropea,v.OtrasVentas from videojuego vv join ventas v on v.ID = vv.IDVentas where vv.Nombre = '"+Name+"'; select DISTINCT d.Nombre Desarrollador, Ciudad, Pais, AnioFundacion from videojuego v join desarrollador d on d.ID = v.IDDesarrollador where v.Nombre = '"+Name+"'; select DISTINCT CriticasPositivas, CriticasNegativas, CriticasNeutrales, UsuariosPositivas,UsuariosNegativas, UsuariosNeutrales,PuntajeUsuarios, PuntajeMetacritic from videojuego v join puntajemetacritic p on p.ID = v.IDPuntaje where v.Nombre = '"+Name+"';";
 
           db.query(query).then((results)=>{
@@ -30,7 +33,7 @@ export const getInfoVideogame = (Name) =>{
             datos.push(results[0][1][0]);
             datos.push(results[0][2][0]);
             datos.push(results[0][3][0]);
-            console.log(datos);
+            //console.log(datos);
             resolve(datos);
           }).catch((error)=>{
                 reject(error);
@@ -43,9 +46,10 @@ export const getMoreInfo = (Name)=>{
     
     return new Promise((resolve, reject)=>{
 
+
         async function GameInfo(client, name){
-            const { data } = await client.request('games') 
-            .pipe(fields('*'), where('name',"=",name), ) 
+            const { data } = await client.request('games') // Here the query is tagged as a "count" query because it ends with `/count`
+            .pipe(fields('*'), where('name',"=",name), ) // 'name', 'games', 'collection.*'
             .execute();
 
             return data;
@@ -63,13 +67,14 @@ export const getMoreInfo = (Name)=>{
         }
 
         async function GetImage(client, gameID){
-            const { data } = await client.request('covers') 
-                .pipe(fields("*"),where("game","=",gameID)) 
+            const { data } = await client.request('covers') // Here the query is tagged as a "count" query because it ends with `/count`
+                .pipe(fields("*"),where("game","=",gameID)) // 'name', 'games', 'collection.*' where('game','>=',198690) 
                 .execute();
             return data;
         }
 
         GenerateClient().then((client)=>{
+
             GameInfo(client, Name).then((id)=>{
                 console.log(id);
                 GetImage(client, id[0]["id"]).then((data)=>{
@@ -82,6 +87,9 @@ export const getMoreInfo = (Name)=>{
             }).catch((error)=>{
                 reject (error);
             })
+
+            
+            
         })
 
     });

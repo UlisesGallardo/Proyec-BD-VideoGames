@@ -17,7 +17,7 @@ function ViewIndividual()  {
 
         const  imagen  = ()=>{
             axios({
-                url: "http://localhost:8081/api/videojuegos/MasInformacion/"+location.state.Nombre,
+                url: process.env.REACT_APP_SERVER_URL + "/api/videojuegos/MasInformacion/"+location.state.Nombre,
                 method: "GET",
             })
             .then((response) => {
@@ -37,7 +37,7 @@ function ViewIndividual()  {
                 
                 console.log("juego", location.state.Nombre);
                 axios({
-                    url: "http://localhost:8081/api/videojuegos/"+location.state.Nombre,
+                    url: process.env.REACT_APP_SERVER_URL + "/api/videojuegos/"+location.state.Nombre,
                     method: "GET",
                 })
                 .then((response) => {
@@ -60,7 +60,6 @@ function ViewIndividual()  {
 
         info.map((Arreglo)=>{
             //console.log(Arreglo);     
-            
             for (var prop in Arreglo) {
                 datos.push({prop: prop, valor: Arreglo[prop]})
             }

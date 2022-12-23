@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SearchPage from "./components/SearchPage"
 
+
 function App() {
   return (
     <BrowserRouter>

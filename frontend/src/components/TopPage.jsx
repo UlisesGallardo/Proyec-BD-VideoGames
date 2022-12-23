@@ -5,10 +5,13 @@ import axios from 'axios';
 import {useLocation} from 'react-router-dom';
 import Chart from "./Chart"
 import ReactLoading from 'react-loading';
+import dotenv from "dotenv";
 
 
 
 function TopPage() {
+    dotenv.config();
+
     const location = useLocation();
     const [Top, setTop] = useState([])
     const [loading, setLoading] = useState(false)
@@ -18,12 +21,13 @@ function TopPage() {
     useEffect(()=>{
         if(location.state){
 
-            var url = ""
+            var url = ''+process.env.SERVER
+            //console.log("URL", url)
             var flag = location.state.top
             if(location.state.top){
                 url = "http://localhost:8081/api/videojuegos/topVentas"
             }else{
-                url = "http://localhost:8081/api/videojuegos/topPuntaje"
+                url = process.env.URL_SERVER+"api/videojuegos/topPuntaje"
             }
 
             axios({
