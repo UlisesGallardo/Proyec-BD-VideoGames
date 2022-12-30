@@ -1,7 +1,7 @@
-import e from "express";
 import db from "../config/db.js";
 import { twitchAccessToken, igdb } from 'ts-igdb-client';
 import { fields, exclude, and, where ,WhereFlags} from 'ts-igdb-client';
+import axios from "axios";
 
 export const getVideojuegosTopVentas = ()=>{
     
@@ -18,14 +18,30 @@ export const getVideojuegosTopVentas = ()=>{
     });
 }
 
+export const getVideojuegosTopMetacritic = ()=>{
+    
+    return new Promise((resolve, reject)=>{
+            axios({
+                url: 'https://api.rawg.io/api/games?dates=2022-01-01,2022-12-31&ordering=-metacritic&key='+process.env.RAWG_KEY,
+                method: "GET",
+            })
+            .then((response) => {
+                console.log("Respuesta desde backend",response);
+                resolve(response.data);
+            }).catch((error) => {
+                console.log("Error siguiente", error);
+                reject(error)
+            })
+    });
+}
+
 export const getInfoVideogame = (Name) =>{
     return new Promise((resolve, reject)=>{
-
-
         //multiples consultas https://www.technicalkeeda.com/nodejs-tutorials/nodejs-mysql-multiple-statement-queries
         //var query = "select * from Videojuego v where v.Nombre = '"+Name+"'; select DISTINCT v.VentasGlobales, v.VentasJapon,v.VentasNorteAmerica, v.VentasUnionEuropea,v.OtrasVentas from Videojuego vv join Ventas v on v.ID = vv.IDVentas where vv.Nombre = '"+Name+"'; select DISTINCT d.Nombre Desarrollador, Ciudad, País, AnioFundacion from Videojuego v join Desarrollador d on d.ID = v.IDDesarrollador where v.Nombre = '"+Name+"'; select DISTINCT CriticasPositivas, CriticasNegativas, CriticasNeutrales, UsuariosPositivas,UsuariosNegativas, UsuariosNeutrales,PuntajeUsuarios, PuntajeMetacritic  from Videojuego v join PuntajeMetacritic p on p.ID = v.IDPuntaje where v.Nombre = '"+Name+"'";
         //console.log("Nombre", Name);
         var query = " select * from videojuego v where v.Nombre = '"+Name+"'; select DISTINCT v.VentasGlobales, v.VentasJapon,v.VentasNorteAmerica, v.VentasUnionEuropea,v.OtrasVentas from videojuego vv join ventas v on v.ID = vv.IDVentas where vv.Nombre = '"+Name+"'; select DISTINCT d.Nombre Desarrollador, Ciudad, Pais, AnioFundacion from videojuego v join desarrollador d on d.ID = v.IDDesarrollador where v.Nombre = '"+Name+"'; select DISTINCT CriticasPositivas, CriticasNegativas, CriticasNeutrales, UsuariosPositivas,UsuariosNegativas, UsuariosNeutrales,PuntajeUsuarios, PuntajeMetacritic from videojuego v join puntajemetacritic p on p.ID = v.IDPuntaje where v.Nombre = '"+Name+"';";
+        console.log("Respuesta desde backend");
 
           db.query(query).then((results)=>{
             const datos = [];
@@ -33,11 +49,10 @@ export const getInfoVideogame = (Name) =>{
             datos.push(results[0][1][0]);
             datos.push(results[0][2][0]);
             datos.push(results[0][3][0]);
-            //console.log(datos);
             resolve(datos);
           }).catch((error)=>{
                 reject(error);
-            });
+          });
 
     });
 }
@@ -76,7 +91,7 @@ export const getMoreInfo = (Name)=>{
         GenerateClient().then((client)=>{
 
             GameInfo(client, Name).then((id)=>{
-                console.log(id);
+                console.log("Informacion importante",id);
                 GetImage(client, id[0]["id"]).then((data)=>{
                     console.log(data);
                     //return data;
@@ -88,8 +103,6 @@ export const getMoreInfo = (Name)=>{
                 reject (error);
             })
 
-            
-            
         })
 
     });

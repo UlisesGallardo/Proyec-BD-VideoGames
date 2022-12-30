@@ -21,13 +21,15 @@ function TopPage() {
     useEffect(()=>{
         if(location.state){
 
-            var url = ''+process.env.SERVER
+            var url = ''
             //console.log("URL", url)
             var flag = location.state.top
             if(location.state.top){
-                url = "http://localhost:8081/api/videojuegos/topVentas"
+                //url = "http://localhost:8081/api/videojuegos/topVentas"
+                url = "https://videogames-info.onrender.com/api/videojuegos/topVentas";
             }else{
-                url = process.env.URL_SERVER+"api/videojuegos/topPuntaje"
+                //url = process.env.URL_SERVER+"api/videojuegos/topPuntaje"
+                url = "http://localhost:8081/api/videojuegos/topPuntajeMetacritic"; 
             }
 
             axios({
@@ -36,7 +38,8 @@ function TopPage() {
             })
             .then((response) => {
                 //setTop(response.data)       //Maps https://flaviocopes.com/javascript-data-structures-map/
-                console.log("datos desde TopPage", response.data);
+                
+                console.log("url usada:",url," datos desde TopPage", response.data);
 
                 const m = new Map()
                 response.data.map((Objeto)=>{

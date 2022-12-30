@@ -14,16 +14,19 @@ export const getVideojuegosTopVentas = (request, response) =>{
     })
 };
 
-export const getInfoVideogame = (request, response) => {
+export const getVideojuegosTopMetacritic = (request, response) =>{
+    videogamesServices.getVideojuegosTopMetacritic().then((result)=>{
+        response.send(result);
+    }).catch((error)=>{
+        //console.log("Hubo un error", error);
+        response.status(500).send(error);
+    })
+};
 
+export const getInfoVideogame = (request, response) => {
     const Name = request.params.Nombre;
 
     videogamesServices.getInfoVideogame(Name).then((result)=>{
-        /*
-        response.status(200).json({
-            data : result,
-            message : "Recuperacion de Ventas exitoso"
-        })*/
         response.send(result);
 
     }).catch((error)=>{

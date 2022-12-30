@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {getVideojuegosTopVentas, getInfoVideogame, getMoreInfo} from  "../controller/videogames.controller.js";
+import {getVideojuegosTopVentas, getInfoVideogame, getMoreInfo, getVideojuegosTopMetacritic} from  "../controller/videogames.controller.js";
 
 const videogamesinfoRouter = Router();
 
@@ -8,8 +8,9 @@ videogamesinfoRouter.get("/", (req, res)=>{
 })
 
 videogamesinfoRouter.get('/topVentas',getVideojuegosTopVentas);
-videogamesinfoRouter.get('/:Nombre',getInfoVideogame);
 videogamesinfoRouter.get('/MasInformacion/:Nombre',getMoreInfo);
+videogamesinfoRouter.get('/topMetacritic',getVideojuegosTopMetacritic);
+videogamesinfoRouter.get('/search/:Nombre',getInfoVideogame);
 
 
 export default videogamesinfoRouter;

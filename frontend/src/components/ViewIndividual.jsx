@@ -17,12 +17,13 @@ function ViewIndividual()  {
 
         const  imagen  = ()=>{
             axios({
-                url: process.env.REACT_APP_SERVER_URL + "/api/videojuegos/MasInformacion/"+location.state.Nombre,
+                //url: "https://videogames-info.onrender.com/api/videojuegos/MasInformacion/"+location.state.Nombre,
+                url: "http://localhost:8081/api/videojuegos/MasInformacion/"+location.state.Nombre,
                 method: "GET",
             })
             .then((response) => {
                 setPicture(response.data[0]["url"])
-                //console.log("Respuesta",response.data[0]["url"]);
+                console.log("Respuesta",response.data[0]);
             })
             .catch((error) => {
                 console.log("Error", error);
@@ -37,7 +38,8 @@ function ViewIndividual()  {
                 
                 console.log("juego", location.state.Nombre);
                 axios({
-                    url: process.env.REACT_APP_SERVER_URL + "/api/videojuegos/"+location.state.Nombre,
+                    //url: "http://localhost:8081/api/videojuegos/"+location.state.Nombre,
+                    url: "https://videogames-info.onrender.com/api/videojuegos/search/"+location.state.Nombre,
                     method: "GET",
                 })
                 .then((response) => {

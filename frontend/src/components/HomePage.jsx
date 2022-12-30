@@ -10,7 +10,7 @@ function HomePage() {
     }
 
     const TopPuntaje = ()=>{
-        navigate('/toppage', {state:{top:false}});
+        navigate('/TopPageMetacritic');
     }
 
     const search = ()=>{
