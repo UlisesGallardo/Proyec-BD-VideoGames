@@ -15,7 +15,10 @@ export const getVideojuegosTopVentas = (request, response) =>{
 };
 
 export const getVideojuegosTopMetacritic = (request, response) =>{
-    videogamesServices.getVideojuegosTopMetacritic().then((result)=>{
+    let page = request.query.Page; //https://stackabuse.com/get-query-strings-and-parameters-in-express-js/
+    let year = request.query.Year;
+    console.log(year);
+    videogamesServices.getVideojuegosTopMetacritic(page, year).then((result)=>{
         response.send(result);
     }).catch((error)=>{
         //console.log("Hubo un error", error);

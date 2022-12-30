@@ -18,15 +18,17 @@ export const getVideojuegosTopVentas = ()=>{
     });
 }
 
-export const getVideojuegosTopMetacritic = ()=>{
+export const getVideojuegosTopMetacritic = (page, year)=>{
     
     return new Promise((resolve, reject)=>{
+            console.log(page);
+            console.log(year);
             axios({
-                url: 'https://api.rawg.io/api/games?dates=2022-01-01,2022-12-31&ordering=-metacritic&key='+process.env.RAWG_KEY,
+                url: 'https://api.rawg.io/api/games?dates='+year+'-01-01,'+year+'-12-31&ordering=-metacritic&key='+process.env.RAWG_KEY+"&page="+page,
                 method: "GET",
             })
             .then((response) => {
-                console.log("Respuesta desde backend",response);
+                //console.log("Respuesta desde backend",response);
                 resolve(response.data);
             }).catch((error) => {
                 console.log("Error siguiente", error);
