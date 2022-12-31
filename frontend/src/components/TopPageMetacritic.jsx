@@ -1,4 +1,4 @@
-import { Container , Row, Col, Dropdown , DropdownButton } from 'react-bootstrap';
+import { Container , Row, Col, Dropdown , DropdownButton, Card } from 'react-bootstrap';
 import TopCard from './TopCard';
 import react, {useEffect, useState} from "react"
 import axios from 'axios';
@@ -97,61 +97,71 @@ function TopPageMetacritic() {
     return (
         <div>
             <br></br><br></br><br></br>
-            <div className='d-flex justify-content-center'> <h1 className="display-1" style={{"font-size":"4rem", "-webkit-text-stroke":"5px black  ", color:"black"}}>Top Juegos Mejores Puntuados Metacritic</h1></div>
-            
-            
+            <div className='d-flex justify-content-center'> <h1 className="display-1" style={{"font-size":"4rem", "-webkit-text-stroke":"5px black  ", color:"black"}}>Top Juegos Mejores Puntuados Metacritic {year}</h1></div>
+            <Container className='mt-5 mb-5'>
+            <Col ><h3>Filtros</h3>       
+                        <Container  >
+                            <Card bg="light" text="dark" border="info">
+                            <Row xs={1} md={2}>         
+                                            <Col>
+                                                <Col><h4 className='d-flex justify-content-center'>Página</h4></Col>    
+                                                <Pagination className='d-flex justify-content-center'> 
+                                                    {pages.map((item) => {
+                                                        return (
+                                                            <Pagination.Item
+                                                                key={item}
+                                                                onClick={() => paginationClicked(item)}
+                                                                active={item === currentPage}
+                                                            >
+                                                                {item}
+                                                            </Pagination.Item>
+                                                        );
+                                                    })}
+                                                </Pagination>
+                                            </Col>
+                                            <Col>
+                                                <Row >
+                                                    <Col >
+                                                    <div>
+                                                        <Row><h4 className='d-flex justify-content-center'>Año</h4></Row>
+                                                        <Row >
+                                                            <div style={{margin: "0 35%",
+                                                                        display: "flex",
+                                                                        justifyContent: "center",}}>
+                                                            <DatePicker
+                                                                selected={startDate}
+                                                                onChange={(date) => yearCliked(date)}
+                                                                showYearPicker
+                                                                minDate={new Date(1970)}
+                                                                maxDate={new Date()}
+                                                                dateFormat="yyyy"
+                                                                placeholderText="1970-Actualidad"
+                                                            />
+                                                            </div>
+                                                        </Row>
+                                                    </div>
+                                                    </Col>
+                                                </Row>
+                                            </Col>
+                                        </Row> 
+                                        </Card>
+                            </Container>
+                        </Col>
+                    </Container>
 
             <Container className='mt-5 mb-5'>
                 {loading ? <div>
-                    <GemeralChart
-                            informacion = {{ArreglodeObjetos:  Datos,
-                            labels: Nombres, 
-                            titulo: "Mejores Puntajes", 
-                            colores:"green"}} 
-                            flag = {false}
-                        />
-
-                        <Container>
-            <Row xs={1} md={2}>               
-                            <Col>
-                                <Pagination> 
-                                    {pages.map((item) => {
-                                        return (
-                                            <Pagination.Item
-                                                key={item}
-                                                onClick={() => paginationClicked(item)}
-                                                active={item === currentPage}
-                                            >
-                                                {item}
-                                            </Pagination.Item>
-                                        );
-                                    })}
-                                </Pagination>
-                            </Col>
-                            <Col>
-                                <Row >
-                                    <Col>
-                                        <Row className='d-flex justify-content-center'>Año</Row>
-                                        <Row >
-                                            <div className='d-flex justify-content-center'>
-                                            <DatePicker
-                                                selected={startDate}
-                                                onChange={(date) => yearCliked(date)}
-                                                showYearPicker
-                                                minDate={new Date(1970)}
-                                                maxDate={new Date()}
-                                                dateFormat="yyyy"
-                                                placeholderText="1970-Actualidad"
-                                            />
-                                            </div>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            </Col>
-                            
-                            
-                        </Row>
-            </Container>
+                        
+                            <GemeralChart
+                                    informacion = {{ArreglodeObjetos:  Datos,
+                                    labels: Nombres, 
+                                    titulo: "Mejores Puntajes", 
+                                    colores:"green"}} 
+                                    flag = {false}
+                                />
+                        
+                    
+                    <br></br>
 
                         <Row xs={1} md={2} className="g-4">
                             {

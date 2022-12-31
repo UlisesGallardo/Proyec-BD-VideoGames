@@ -48,8 +48,8 @@ function Chart(props) {
                   ],
               }}
 
-              width={300}
-              height={300}
+              width={400}
+              height={400}
               options={{maintainAspectRatio:false}}
             />
         </div>
