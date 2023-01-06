@@ -28,7 +28,6 @@ export const getVideojuegosTopMetacritic = (page, year)=>{
                 method: "GET",
             })
             .then((response) => {
-                //console.log("Respuesta desde backend",response);
                 resolve(response.data);
             }).catch((error) => {
                 console.log("Error siguiente", error);
