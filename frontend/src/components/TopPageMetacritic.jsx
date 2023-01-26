@@ -74,39 +74,61 @@ function TopPageMetacritic() {
       }
 
     useEffect(()=>{
-            //var url = "http://localhost:8081/api/videojuegos/topMetacritic";
-            var url ="https://videogames-info.onrender.com/api/videojuegos/topMetacritic";
 
-            console.log("Año",year);
-            console.log("Page",currentPage);
-            axios.get(url, {
-                params: {
-                    Page: currentPage,
-                    Year: year
-                }
-            }).then((response) => {            
-                console.log("url:",url," datos desde TopPage", response.data);
+            
+            console.log("Datos Local Storage", JSON.parse(localStorage.getItem("Datos")))
 
-                var juegos = []
-                juegos = response.data["results"];
-                
+            if(localStorage.getItem("Datos"+(year)+"-"+(currentPage)) !== null){
+                restart();
 
-                juegos.map((Objeto)=>{
-                    Datos.push({"PuntajeMetacritic":Objeto["metacritic"],
-                                "Nombre":Objeto["name"]})
-
-                    Nombres.push(Objeto["name"])
-
-                    Top.push({"PuntajeMetacritic":Objeto["metacritic"]?Objeto["metacritic"]:"No puntuado",
-                              "Nombre":Objeto["name"],
-                              "AnioSalida":Objeto["released"],
-                              "Genero": Objeto["genres"].length ? Objeto["genres"][0]["name"] : "No definido",
-                              "url":Objeto["background_image"]})
-                })
+                var datos = JSON.parse(localStorage.getItem("Datos"+(year)+"-"+(currentPage)));
+                setDatos(datos);
+                var top = JSON.parse(localStorage.getItem("Top"+(year)+"-"+(currentPage)));
+                setTop(top);
+                var nombres = JSON.parse(localStorage.getItem("Nombres"+(year)+"-"+(currentPage)));
+                setNombres(nombres);
                 setLoading(true);
-            }).catch((error) => {
-                console.log("Error", error);
-            })  
+            }else{
+                        //var url = "http://localhost:8081/api/videojuegos/topMetacritic";
+                        var url ="https://videogames-info.onrender.com/api/videojuegos/topMetacritic";
+
+                        console.log("Año",year);
+                        console.log("Page",currentPage);
+                        axios.get(url, {
+                            params: {
+                                Page: currentPage,
+                                Year: year
+                            }
+                        }).then((response) => {            
+                            console.log("url:",url," datos desde TopPage", response.data);
+
+                            var juegos = []
+                            juegos = response.data["results"];
+                            
+
+                            juegos.map((Objeto)=>{
+                                Datos.push({"PuntajeMetacritic":Objeto["metacritic"],
+                                            "Nombre":Objeto["name"]})
+
+                                Nombres.push(Objeto["name"])
+
+                                Top.push({"PuntajeMetacritic":Objeto["metacritic"]?Objeto["metacritic"]:"No puntuado",
+                                        "Nombre":Objeto["name"],
+                                        "AnioSalida":Objeto["released"],
+                                        "Genero": Objeto["genres"].length ? Objeto["genres"][0]["name"] : "No definido",
+                                        "url":Objeto["background_image"]})
+                            })
+
+                            localStorage.setItem("Datos"+(year)+"-"+(currentPage),JSON.stringify(Datos));
+                            localStorage.setItem("Nombres"+(year)+"-"+(currentPage),JSON.stringify(Nombres));
+                            localStorage.setItem("Top"+(year)+"-"+(currentPage), JSON.stringify(Top));
+
+                            setLoading(true);
+                        }).catch((error) => {
+                            console.log("Error", error);
+                        })  
+
+        }
     },[currentPage, year])
 
     return (
@@ -144,7 +166,6 @@ function TopPageMetacritic() {
                                     labels: Nombres, 
                                     titulo: "Mejores Puntajes", 
                                     colores:"green"}} 
-                                    flag = {false}
                                 />
                         
                     
