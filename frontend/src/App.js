@@ -9,6 +9,7 @@ import TopPageMetacritic from "./components/TopPageMetacritic"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SearchPage from "./components/SearchPage"
+import InfoGame from './components/InfoGame';
 
 
 function App() {
@@ -16,8 +17,8 @@ function App() {
     <BrowserRouter>
       <NavbarLateral/>
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/info" element={<ViewIndividual/>}/>
+        <Route path="/" element={<TopPageMetacritic/>}/>
+        <Route path="/info" element={<InfoGame/>}/>
         <Route path="/toppage" element={<TopPage/>}/>
         <Route path="/TopPageMetacritic" element={<TopPageMetacritic/>}/>
         <Route path="/search" element={<SearchPage/>}/>

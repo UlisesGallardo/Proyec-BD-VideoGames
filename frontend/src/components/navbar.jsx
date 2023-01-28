@@ -50,17 +50,26 @@ function NavbarLateral() {
 
     return (
         <div>
-            <Navbar bg = "dark" variant = "dark" expand={false}>
+            <Navbar bg = "dark" variant = "dark" expand={true} className="mb-3">
                 <Container fluid>
                     <Navbar.Brand href="/">
-                        VideoGamesInfo
-                    </Navbar.Brand>
+                        iLoveVideoGames
+                    </Navbar.Brand>  
+
+                    <Nav  className="me-auto">
+                        <Nav.Link href="/">Juegos Indie</Nav.Link>
+                        <Nav.Link href="/">Arte generativo</Nav.Link>
+                    </Nav>
+                    
+
+                    {/*
                     <Navbar.Toggle aria-controls="offcanvasNavbar" />
                     <Navbar.Offcanvas
                     id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel"
                     placement="end"
                     >
+
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title id="offcanvasNavbarLabel">Opciones</Offcanvas.Title>
                     </Offcanvas.Header>
@@ -75,12 +84,16 @@ function NavbarLateral() {
                             />
                             <Button variant="outline-info" onClick={validar}>Buscar</Button>
                         </Form>
+
+                       
+
                         <Nav className="justify-content-end flex-grow-1 pe-3">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/search">Búsqueda avanzada</Nav.Link>
+                            <Nav.Link href="/">Home</Nav.Link>
+                            <Nav.Link href="/search">Búsqueda avanzada</Nav.Link>
                         </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
+                    */}
                 </Container>
             </Navbar>
         </div>

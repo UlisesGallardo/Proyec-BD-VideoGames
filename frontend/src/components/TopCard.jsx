@@ -5,7 +5,7 @@ function TopCard(props) {
     let navigate = useNavigate();
 
     const Buscar = ()=>{
-        navigate('/info', {state:{Nombre:props.Nombre}});
+        navigate('/info', {state:{Info:props.Info}});
     }
 
     return (
