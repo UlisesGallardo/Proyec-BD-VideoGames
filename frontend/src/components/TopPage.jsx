@@ -24,6 +24,7 @@ function TopPage() {
             var url = ''
             //console.log("URL", url)
             var flag = location.state.top
+            
             if(location.state.top){
                 //url = "http://localhost:8081/api/videojuegos/topVentas"
                 url = "https://videogames-info.onrender.com/api/videojuegos/topVentas";
