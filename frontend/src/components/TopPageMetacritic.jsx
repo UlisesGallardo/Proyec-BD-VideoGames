@@ -1,6 +1,6 @@
 import { Container , Row, Col, Dropdown , DropdownButton, Card, Button } from 'react-bootstrap';
 import TopCard from './TopCard';
-import react, {useEffect, useState} from "react"
+import react, {useEffect, useState, forwardRef} from "react"
 import axios from 'axios';
 import {useLocation} from 'react-router-dom';
 import GeneralChart from "./GeneralChart"
@@ -41,6 +41,7 @@ function TopPageMetacritic() {
         setDatos([]);
         setNombres([]);
         setTop([]);
+        setGames([]);
         setLoading(false);
     }
 
@@ -75,11 +76,9 @@ function TopPageMetacritic() {
       }
 
     useEffect(()=>{
-
-            
-            console.log("Datos Local Storage", JSON.parse(localStorage.getItem("Datos")))
-
+            //console.log("Datos Local Storage", JSON.parse(localStorage.getItem("Datos")))
             if(localStorage.getItem("Datos"+(year)+"-"+(currentPage)) !== null){ //Valiar todos los datos
+                console.log("entrando", "Datos"+(year)+"-"+(currentPage));
                 restart();
                 var datos = JSON.parse(localStorage.getItem("Datos"+(year)+"-"+(currentPage)));
                 setDatos(datos);
@@ -89,7 +88,7 @@ function TopPageMetacritic() {
                 setNombres(nombres);
                 var games = JSON.parse(localStorage.getItem("Games"+(year)+"-"+(currentPage)));
                 setGames(games);
-                setLoading(true);
+                setLoading(true);        
             }else{
                         //var url = "http://localhost:8081/api/videojuegos/topMetacritic";
                         var url ="https://videogames-info.onrender.com/api/videojuegos/topMetacritic";
@@ -135,53 +134,45 @@ function TopPageMetacritic() {
         }
     },[currentPage, year])
 
+    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+       <Button variant="outline-info" onClick={onClick} ref={ref}>
+            Año {value}
+       </Button> 
+    ));
+
     return (
         <div width="100%">
             <br></br><br></br><br></br>
             <div className='d-flex justify-content-center'> <h1 className="display-1" style={{"fontSize":"4rem", color:"black"}}>Top Juegos Mejores Puntuados Metacritic {year}</h1></div>
             <Container className='mt-5 mb-5'>
             <Col ><h3>Filtros</h3>       
-                        <Container  >
-                                <Button variant="outline-info" onClick={handleClick}>
-                                        Año {year}
-                                </Button>                
-                                {isOpen &&
+                        <Container>
                                      <DatePicker
-                                     selected={startDate}
-                                     onChange={(date) => yearCliked(date)}
-                                     showYearPicker
-                                     minDate={new Date(1970)}
-                                     maxDate={new Date()}
-                                     dateFormat="yyyy"
-                                     placeholderText="1970-Actualidad"
-                                     inline
+                                        selected={startDate}
+                                        onChange={(date) => yearCliked(date)}
+                                        showYearPicker
+                                        minDate={new Date(1970)}
+                                        maxDate={new Date()}
+                                        dateFormat="yyyy"
+                                        placeholderText="1970-Actualidad"
+                                        customInput={<ExampleCustomInput />}
                                  />
-                                }
-                               
+                                
                             </Container>
                         </Col>
                     </Container>
 
-            <Container className='mt-5 mb-5'>
-                {loading ? <div>
-                        
-                            <GeneralChart
-                                    informacion = {{ArreglodeObjetos:  Datos,
-                                    labels: Nombres, 
-                                    titulo: "Mejores Puntajes", 
-                                    colores:"green"}} 
-                                />
-                        
-                    
+            <Container className='mt-5 mb-5' fluid>
+                {loading ? <div>                    
                     <br></br>
 
-                        <Row xs={1} md={2} className="g-4">
+                        <Row xs={1} md={3} lg={4} className="g-4">
                             {
                                 Top.map((Objeto, index)=>{
                                     {
                                     
                                             return <div key={index}>
-                                                    <Col><TopCard Info = {Games[index]} Numero={(index+1 + (currentPage-1)*20)} Nombre={Objeto.Nombre} url={Objeto.url} Global={"Puntaje Metacritic: "+Objeto.PuntajeMetacritic} All={"Fecha de Salida: "+Objeto.AnioSalida+" Género: "+Objeto.Genero} /> </Col>                                       
+                                                    <Col ><TopCard Info = {Games[index]} Numero={(index+1 + (currentPage-1)*20)} Nombre={Objeto.Nombre} url={Objeto.url} Global={"Puntaje Metacritic: "+Objeto.PuntajeMetacritic} All={"Fecha de Salida: "+Objeto.AnioSalida+" Género: "+Objeto.Genero} /> </Col>                                       
                                             </div>
                                     
                                     }
@@ -210,6 +201,14 @@ function TopPageMetacritic() {
                     );
                 })}
             </Pagination>
+
+             {/* <GeneralChart
+                informacion = {{ArreglodeObjetos:  Datos,
+                labels: Nombres, 
+                titulo: "Mejores Puntajes", 
+                colores:"green"}} 
+            /> */ }
+            
         </div>
     )
 }

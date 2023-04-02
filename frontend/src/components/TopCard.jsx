@@ -5,11 +5,11 @@ function TopCard(props) {
     let navigate = useNavigate();
 
     const Buscar = ()=>{
+        console.log("datos enviados",props.Info)
         navigate('/info', {state:{Info:props.Info}});
     }
 
     return (
-        <div>
             <Card bg="dark" text="light" border="info" className="mt-10" style={{ height: '18rem'}} >
                 
                         <Card.Img  src={props.url} alt="Card image"  style={{ height:"100%", opacity:"0.4"}} />
@@ -27,7 +27,6 @@ function TopCard(props) {
                         </Card.Body>
                     </Card.ImgOverlay>
             </Card>
-        </div>
     )
 }
 

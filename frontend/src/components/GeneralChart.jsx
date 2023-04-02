@@ -55,7 +55,7 @@ function Chart(props) {
                             maintainAspectRatio: false,}}
 
                         /> 
-                        </article>: <h1>No hay suficientes puntuaciones</h1>
+                        </article>: <h1></h1>
                     }
         </>
     )
